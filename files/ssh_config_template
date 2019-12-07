@@ -1,0 +1,33 @@
+Host ${prefix}-rancherserver
+  HostName ${rancherserver}
+  User rancher
+  StrictHostKeyChecking no
+
+%{ for index, ip in rancheragent-all ~}
+Host ${prefix}-rancheragent-all-${index}
+  HostName ${ip}
+  User rancher
+  StrictHostKeyChecking no
+
+%{ endfor ~}
+%{ for index, ip in rancheragent-etcd ~}
+Host ${prefix}-rancheragent-etcd-${index}
+  HostName ${ip}
+  User rancher
+  StrictHostKeyChecking no
+
+%{ endfor ~}
+%{ for index, ip in rancheragent-controlplane ~}
+Host ${prefix}-rancheragent-controlplane-${index}
+  HostName ${ip}
+  User rancher
+  StrictHostKeyChecking no
+
+%{ endfor ~}
+%{ for index, ip in rancheragent-worker ~}
+Host ${prefix}-rancheragent-worker-${index}
+  HostName ${ip}
+  User rancher
+  StrictHostKeyChecking no
+
+%{ endfor ~}
