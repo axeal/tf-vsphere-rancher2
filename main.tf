@@ -51,17 +51,17 @@ resource "vsphere_virtual_machine" "rancherserver" {
   }
 
   extra_config = {
-    "guestinfo.cloud-init.config.data"   = base64encode(templatefile("files/cloud_config_server", {
-      admin_password        = var.admin_password,
-      rancher_version       = var.rancher_version,
-      rancher_args          = var.rancher_args,
-      ssh_keys              = var.ssh_keys,
-      hostname              = "${var.prefix}-rancherserver",
-      vsphere_server        = var.vsphere_server,
-      vsphere_user          = var.vsphere_user,
-      vsphere_password      = var.vsphere_password,
-      k8s_version           = var.k8s_version,
-      cluster_name          = var.cluster_name
+    "guestinfo.cloud-init.config.data" = base64encode(templatefile("files/cloud_config_server", {
+      admin_password   = var.admin_password,
+      rancher_version  = var.rancher_version,
+      rancher_args     = var.rancher_args,
+      ssh_keys         = var.ssh_keys,
+      hostname         = "${var.prefix}-rancherserver",
+      vsphere_server   = var.vsphere_server,
+      vsphere_user     = var.vsphere_user,
+      vsphere_password = var.vsphere_password,
+      k8s_version      = var.k8s_version,
+      cluster_name     = var.cluster_name
     }))
     "guestinfo.cloud-init.data.encoding" = "base64"
   }
@@ -94,13 +94,13 @@ resource "vsphere_virtual_machine" "rancheragent-all" {
   }
 
   extra_config = {
-    "guestinfo.cloud-init.config.data"   = base64encode(templatefile("files/cloud_config_agent", {
-      ssh_keys              = var.ssh_keys,
-      hostname              = "${var.prefix}-rancheragent-all-${count.index}",
-      rancher_version       = var.rancher_version,
-      cluster_name          = var.cluster_name,
-      server_address        = vsphere_virtual_machine.rancherserver.default_ip_address
-      admin_password        = var.admin_password
+    "guestinfo.cloud-init.config.data" = base64encode(templatefile("files/cloud_config_agent", {
+      ssh_keys        = var.ssh_keys,
+      hostname        = "${var.prefix}-rancheragent-all-${count.index}",
+      rancher_version = var.rancher_version,
+      cluster_name    = var.cluster_name,
+      server_address  = vsphere_virtual_machine.rancherserver.default_ip_address
+      admin_password  = var.admin_password
     }))
     "guestinfo.cloud-init.data.encoding" = "base64"
   }
@@ -133,13 +133,13 @@ resource "vsphere_virtual_machine" "rancheragent-etcd" {
   }
 
   extra_config = {
-    "guestinfo.cloud-init.config.data"   = base64encode(templatefile("files/cloud_config_agent", {
-      ssh_keys              = var.ssh_keys,
-      hostname              = "${var.prefix}-rancheragent-etcd-${count.index}",
-      rancher_version       = var.rancher_version,
-      cluster_name          = var.cluster_name,
-      server_address        = vsphere_virtual_machine.rancherserver.default_ip_address
-      admin_password        = var.admin_password
+    "guestinfo.cloud-init.config.data" = base64encode(templatefile("files/cloud_config_agent", {
+      ssh_keys        = var.ssh_keys,
+      hostname        = "${var.prefix}-rancheragent-etcd-${count.index}",
+      rancher_version = var.rancher_version,
+      cluster_name    = var.cluster_name,
+      server_address  = vsphere_virtual_machine.rancherserver.default_ip_address
+      admin_password  = var.admin_password
     }))
     "guestinfo.cloud-init.data.encoding" = "base64"
   }
@@ -172,13 +172,13 @@ resource "vsphere_virtual_machine" "rancheragent-controlplane" {
   }
 
   extra_config = {
-    "guestinfo.cloud-init.config.data"   = base64encode(templatefile("files/cloud_config_agent", {
-      ssh_keys              = var.ssh_keys,
-      hostname              = "${var.prefix}-rancheragent-controlplane-${count.index}",
-      rancher_version       = var.rancher_version,
-      cluster_name          = var.cluster_name,
-      server_address        = vsphere_virtual_machine.rancherserver.default_ip_address
-      admin_password        = var.admin_password
+    "guestinfo.cloud-init.config.data" = base64encode(templatefile("files/cloud_config_agent", {
+      ssh_keys        = var.ssh_keys,
+      hostname        = "${var.prefix}-rancheragent-controlplane-${count.index}",
+      rancher_version = var.rancher_version,
+      cluster_name    = var.cluster_name,
+      server_address  = vsphere_virtual_machine.rancherserver.default_ip_address
+      admin_password  = var.admin_password
     }))
     "guestinfo.cloud-init.data.encoding" = "base64"
   }
@@ -211,26 +211,26 @@ resource "vsphere_virtual_machine" "rancheragent-worker" {
   }
 
   extra_config = {
-    "guestinfo.cloud-init.config.data"   = base64encode(templatefile("files/cloud_config_agent", {
-      ssh_keys              = var.ssh_keys,
-      hostname              = "${var.prefix}-rancheragent-worker-${count.index}",
-      rancher_version       = var.rancher_version,
-      cluster_name          = var.cluster_name,
-      server_address        = vsphere_virtual_machine.rancherserver.default_ip_address
-      admin_password        = var.admin_password
+    "guestinfo.cloud-init.config.data" = base64encode(templatefile("files/cloud_config_agent", {
+      ssh_keys        = var.ssh_keys,
+      hostname        = "${var.prefix}-rancheragent-worker-${count.index}",
+      rancher_version = var.rancher_version,
+      cluster_name    = var.cluster_name,
+      server_address  = vsphere_virtual_machine.rancherserver.default_ip_address
+      admin_password  = var.admin_password
     }))
     "guestinfo.cloud-init.data.encoding" = "base64"
   }
 }
 
 resource "local_file" "ssh_config" {
-  content  = templatefile("${path.module}/files/ssh_config_template", {
+  content = templatefile("${path.module}/files/ssh_config_template", {
     prefix                    = var.prefix
     rancherserver             = vsphere_virtual_machine.rancherserver.default_ip_address
-    rancheragent-all          = [for node in vsphere_virtual_machine.rancheragent-all: node.default_ip_address],
-    rancheragent-etcd         = [for node in vsphere_virtual_machine.rancheragent-etcd: node.default_ip_address],
-    rancheragent-controlplane = [for node in vsphere_virtual_machine.rancheragent-controlplane: node.default_ip_address],
-    rancheragent-worker       = [for node in vsphere_virtual_machine.rancheragent-worker: node.default_ip_address],
+    rancheragent-all          = [for node in vsphere_virtual_machine.rancheragent-all : node.default_ip_address],
+    rancheragent-etcd         = [for node in vsphere_virtual_machine.rancheragent-etcd : node.default_ip_address],
+    rancheragent-controlplane = [for node in vsphere_virtual_machine.rancheragent-controlplane : node.default_ip_address],
+    rancheragent-worker       = [for node in vsphere_virtual_machine.rancheragent-worker : node.default_ip_address],
   })
   filename = "${path.module}/ssh_config"
 }
