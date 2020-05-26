@@ -34,5 +34,6 @@ You can use the use the auto-generated ssh_config file to connect to the droplet
 ## How to use
 
 - Clone this repository
+- Ensure you have a copy of the RancherOS VMWare autoformat ISO in your vSphere datastore https://github.com/rancher/os/releases/latest/download/rancheros-vmware-autoformat.iso
 - Move the file `terraform.tfvars.example` to `terraform.tfvars` and edit (see inline explanation)
 - Run `terraform apply`
