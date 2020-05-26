@@ -1,0 +1,77 @@
+# vsphere username
+vsphere_user = "foo"
+
+# vsphere password
+vsphere_password = "bar"
+
+# URL of the vSphere server
+vsphere_server = "vsphere.example.com"
+
+# vSphere datacenter for the provisioned VMs
+vsphere_datacenter = "DC-1"
+
+# vSphere datastore for the provisioned VMs
+vsphere_datastore = "datastore-1"
+
+# vSphere resource pool for the provisioned VMs
+vsphere_resource_pool = "foo-pool"
+
+# vSphere network for the provisioned VMs
+vsphere_network = "Network 1"
+
+# Path in datastore to the RancherOS VMWare autoformat ISO https://github.com/rancher/os/releases/latest/download/rancheros-vmware-autoformat.iso
+vsphere_cdrom_path = "foo/rancheros-vmware-autoformat.iso"
+
+# Number of vCPUs for the Rancher server VM
+rancher_cpus = 2
+
+# RAM (in MB) for the Rancher server VM
+rancher_memory = 2048
+
+# Disk space (in GB) for the Rancher server VM
+rancher_disk_size = 20
+
+# Number of vCPUs for the agent VMs
+agent_cpus = 2
+
+# RAM (in MB) for the Rancher agent VMs
+agent_memory = 2048
+
+# Disk space (in GB) for the Rancher agent VMs
+agent_disk_size = 20
+
+# Resources will be prefixed with this to avoid clashing names
+prefix = "foo"
+
+# rancher/rancher image tag to use
+rancher_version = "v2.4.3"
+
+# Extra arguments for rancher/rancher container
+rancher_args = ""
+
+# Admin password to access Rancher
+admin_password = "admin"
+
+# K8s version of created cluster
+#k8s_version = "v1.12.0-rancher1-1"
+k8s_version = ""
+
+# Name of created cluster
+cluster_name = "custom"
+
+# SSH keys to access rancher and agents
+ssh_keys = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDCxe63//4ctYWj+BNev+Zx4yiyk/MJ8JOaIQb39QtmI56vrSnMbaYAogfpvRusFapRhJqcsfyW6qTl0mcQbPYFS9nVTLcfdt7gTDSzJRDeQJI4Y78L+tKuneD5RXxivqdVbLmzSpIix31nZ11DBPF/AES0zlr3qopSKVS7tbcxvESa/5JRe1kTBPVOWhBVmg8iKeuHW8vHPCchrPaF4x3Mx4/SgIVvmbTDrNy85dsbO5B8bjWDpwdXPU9xLzrPTr5nhhNSXIFPw6omDdJiNWTfLXizGJ6D2LbQw+m8aJIuGFDFp2/UiWHn9vH3Jx/AYWP4MCezX8fpbiDM9/ud6nmwNLUhKN4ZaXZhweyMgHiPPJnQ4B3fiTKJHnS4ma2S3BurOhoHfW0aregACKFGL+t8otCxtpxrJndmyOoRIoV2xIi6QCemcXanmI8J/+Yes3p+XZ4SZ7M4gGoRrDgaU3NMDVIYkuPEDdq3xcNRbKAAn6EMkPvYJOWO9ioEFsccX5oKn7ObPVI1LBZc1ZsGO4NsfFG8t+oa2MTECzoo9lVwbLy6Fk1qD52QnyI2o4PwTMVsyDMoRONdqFioUT2aj2xIwOHyCRwgDfpDqsefwiEj+uc3kcVLsv8BqKmnPvnpfhUpsl0b2/94qfN+Qu2ss+EdBVNlkl3Pq9bgHRjzY53h/Q=="
+]
+
+# Count of agent nodes with role all
+count_agent_all_nodes = "3"
+
+# Count of agent nodes with role etcd
+count_agent_etcd_nodes = "0"
+
+# Count of agent nodes with role controlplane
+count_agent_controlplane_nodes = "0"
+
+# Count of agent nodes with role worker
+count_agent_worker_nodes = "0"
