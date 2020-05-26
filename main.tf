@@ -51,7 +51,6 @@ resource "vsphere_virtual_machine" "rancherserver" {
   }
 
   extra_config = {
-<<<<<<< HEAD
     "guestinfo.cloud-init.config.data"   = base64encode(templatefile("files/cloud_config_server", {
       admin_password        = var.admin_password,
       rancher_version       = var.rancher_version,
@@ -69,19 +68,6 @@ resource "vsphere_virtual_machine" "rancherserver" {
       vsphere_datacenter    = var.vsphere_datacenter,
       vsphere_datastore     = var.vsphere_datastore,
       vsphere_resource_pool = var.vsphere_resource_pool
-=======
-    "guestinfo.cloud-init.config.data" = base64encode(templatefile("files/cloud_config_server", {
-      admin_password   = var.admin_password,
-      rancher_version  = var.rancher_version,
-      rancher_args     = var.rancher_args,
-      ssh_keys         = var.ssh_keys,
-      hostname         = "${var.prefix}-rancherserver",
-      vsphere_server   = var.vsphere_server,
-      vsphere_user     = var.vsphere_user,
-      vsphere_password = var.vsphere_password,
-      k8s_version      = var.k8s_version,
-      cluster_name     = var.cluster_name
->>>>>>> Run terraform fmt
     }))
     "guestinfo.cloud-init.data.encoding" = "base64"
   }
