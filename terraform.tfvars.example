@@ -46,6 +46,9 @@ prefix = "foo"
 # rancher/rancher image tag to use
 rancher_version = "v2.4.3"
 
+# Rancher server audit log level (0-3)
+audit_level = 0
+
 # Extra arguments for rancher/rancher container
 rancher_args = ""
 

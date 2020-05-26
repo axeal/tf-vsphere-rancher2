@@ -28,7 +28,7 @@ write_files:
             done
           done
 
-          docker run -d --name=rancher --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:${rancher_version} ${rancher_args}
+          docker run -d -e AUDIT_LEVEL=${audit_level} --name=rancher --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:${rancher_version} ${rancher_args}
 
           while true; do
 

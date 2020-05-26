@@ -53,6 +53,7 @@ resource "vsphere_virtual_machine" "rancherserver" {
   extra_config = {
     "guestinfo.cloud-init.config.data"   = base64encode(templatefile("files/cloud_config_server", {
       admin_password        = var.admin_password,
+      audit_level           = var.audit_level,
       rancher_version       = var.rancher_version,
       rancher_args          = var.rancher_args,
       ssh_keys              = var.ssh_keys,

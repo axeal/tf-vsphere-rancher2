@@ -66,6 +66,10 @@ variable "rancher_args" {
   default = ""
 }
 
+variable "audit_level" {
+  default = 0
+}
+
 variable "admin_password" {
   default = "admin"
 }
