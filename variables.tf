@@ -59,7 +59,7 @@ variable "prefix" {
 }
 
 variable "rancher_version" {
-  default = "v2.3.3"
+  default = "v2.4.3"
 }
 
 variable "rancher_args" {
@@ -83,7 +83,7 @@ variable "ssh_keys" {
 }
 
 variable "count_agent_all_nodes" {
-  default = "3"
+  default = "0"
 }
 
 variable "count_agent_etcd_nodes" {

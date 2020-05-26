@@ -61,7 +61,13 @@ resource "vsphere_virtual_machine" "rancherserver" {
       vsphere_user          = var.vsphere_user,
       vsphere_password      = var.vsphere_password,
       k8s_version           = var.k8s_version,
-      cluster_name          = var.cluster_name
+      cluster_name          = var.cluster_name,
+      vsphere_server        = var.vsphere_server,
+      vsphere_user          = var.vsphere_user,
+      vsphere_password      = var.vsphere_password,
+      vsphere_datacenter    = var.vsphere_datacenter,
+      vsphere_datastore     = var.vsphere_datastore,
+      vsphere_resource_pool = var.vsphere_resource_pool
     }))
     "guestinfo.cloud-init.data.encoding" = "base64"
   }
@@ -146,7 +152,7 @@ resource "vsphere_virtual_machine" "rancheragent-etcd" {
 }
 
 resource "vsphere_virtual_machine" "rancheragent-controlplane" {
-  count            = var.count_agent_all_nodes
+  count            = var.count_agent_controlplane_nodes
   name             = "${var.prefix}-rancheragent-controlplane-${count.index}"
   resource_pool_id = data.vsphere_resource_pool.resource_pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
@@ -185,7 +191,7 @@ resource "vsphere_virtual_machine" "rancheragent-controlplane" {
 }
 
 resource "vsphere_virtual_machine" "rancheragent-worker" {
-  count            = var.count_agent_all_nodes
+  count            = var.count_agent_worker_nodes
   name             = "${var.prefix}-rancheragent-worker-${count.index}"
   resource_pool_id = data.vsphere_resource_pool.resource_pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
