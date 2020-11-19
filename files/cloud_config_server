@@ -28,7 +28,7 @@ write_files:
             done
           done
 
-          docker run -d -e AUDIT_LEVEL=${audit_level} --name=rancher --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:${rancher_version} ${rancher_args}
+          docker run -d -e AUDIT_LEVEL=${audit_level} --privileged --name=rancher --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:${rancher_version} ${rancher_args}
 
           while true; do
 
@@ -58,6 +58,23 @@ write_files:
           # Configure server-url
           RANCHER_SERVER="https://$(ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')"
           docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/settings/server-url' -H 'content-type: application/json' -H "Authorization: Bearer $APITOKEN" -X PUT --data-binary '{"name":"server-url","value":"'$RANCHER_SERVER'"}' --insecure
+
+          # Check for available k8s versions if not specifically set
+          if [ -z "${k8s_version}" ]; then
+              while true; do
+                  K8SVERSIONRESPONSE=$(docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/settings/k8s-version' -H 'content-type: application/json' -H "Authorization: Bearer $APITOKEN" --insecure)
+                  K8SVERSION=$(echo $K8SVERSIONRESPONSE | docker run --rm -i $jqimage -r .value)
+                  echo "K8SVERSION: "$K8SVERSION""
+
+                  if [ "$K8SVERSION" != "" ]; then
+                      break
+                  else
+                      sleep 5
+                  fi
+              done
+          else
+              K8SVERSION="${k8s_version}"
+          fi
 
           # Create vSphere cloud credential
           docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/cloudCredentials' -H 'content-type: application/json' -H "Authorization: Bearer $APITOKEN" -X POST --data-binary '{"name":"vsphere","vmwarevspherecredentialConfig":{"vcenter":"${vsphere_server}","vcenterPort":"443","username":"${vsphere_user}","password":"${vsphere_password}"}}' --insecure
